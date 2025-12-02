@@ -5,54 +5,50 @@ import ArvoreAVL.ArvoreAVL;
 import Exception.NaoEncontradoException;
 import Interface.Service;
 import Model.Aluno;
-import Model.Pessoa;
-
 import java.util.List;
-public class ServiceAluno implements Service<Integer> {
-    ArvoreAVL<Aluno> arvoreAVL = new ArvoreAVL<>();
+
+
+public class ServiceAluno implements Service<Aluno> {
+    private ArvoreAVL<Aluno> arvore = new ArvoreAVL<>();
 
     @Override
-    public void inserir(int chave, Pessoa pessoa) {
-        // Assumindo que Pessoa é do tipo Aluno
-        if (!(pessoa instanceof Aluno)) {
-            throw new IllegalArgumentException("Pessoa precisa ser do tipo Aluno");
-        }
-        Aluno aluno = (Aluno) pessoa;
-        aluno.setMatricula(chave);
-        arvoreAVL.inserir(aluno);
+    public void inserir(Aluno aluno) {
+        arvore.inserir(aluno);
     }
 
     @Override
-    public void remover(int matricula) {
-        // Criar um objeto Aluno "dummy" para remover
+    public void remover(int matricula){
         Aluno dummy = new Aluno("", "", "", "", "", matricula);
-        arvoreAVL.remover(dummy);
+        arvore.remover(dummy);
     }
 
     @Override
-    public void imprimirEmOrdem(ArvoreAVL arvoreAVL) {
-        List<Aluno> alunos = arvoreAVL.emOrdem();
-        for (Aluno aluno : alunos) {
-            System.out.println(aluno.getNome());
-        }
-    }
-
-    public ArvoreAVL<Aluno> getArvoreAVLCopy() {
-        ArvoreAVL<Aluno> copia = new ArvoreAVL<>();
-        for (Aluno aluno : arvoreAVL.emOrdem()) {
-            copia.inserir(aluno);
-        }
-        return copia;
-    }
-
-    @Override
-    public Aluno buscar(Integer matricula) throws NaoEncontradoException  {
+    public Aluno buscar(int matricula) throws NaoEncontradoException {
         Aluno dummy = new Aluno("", "", "", "", "", matricula);
-        Aluno result = arvoreAVL.buscar(dummy);
-        if (result != null) {
-            return result;
-        } 
-        throw new NaoEncontradoException("Aluno com matricula " + matricula + " nao encontrado.");
+        Aluno encontrado = arvore.buscar(dummy);
+        if(encontrado == null) throw new NaoEncontradoException("Aluno não encontrado");
+        return encontrado;
+    }
+
+    @Override
+    public void atualizar(int matricula, Aluno novosDados) throws NaoEncontradoException {
+        Aluno existente = buscar(matricula);
+        existente.setNome(novosDados.getNome());
+        existente.setTelefone(novosDados.getTelefone());
+        existente.setEmail(novosDados.getEmail());
+        existente.setCurso(novosDados.getCurso());
+    }
+
+    @Override
+    public void listar() {
+        for(Aluno a : arvore.emOrdem()) {
+            System.out.println(a.getMatricula() + ": " + a.getNome()); 
+        }
+    }
+
+    @Override
+    public void exibirArvore() {
+        arvore.exibirArvore();
     }
 
 }

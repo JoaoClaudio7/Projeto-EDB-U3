@@ -187,4 +187,22 @@ public class ArvoreAVL<T extends Comparable<T>> {
         emOrdem(raiz, lista);
         return lista;
     }
+
+    public void exibirArvore(){
+        imprimirArvore(raiz, "", true);
+    }
+
+    private void imprimirArvore(No<T> no, String prefixo, boolean isFim){
+        if(no != null){
+            System.out.print(prefixo);
+            System.out.print(isFim ? "└── " : "├── ");
+            System.out.println(no.chave);
+
+            imprimirArvore(no.esquerda, prefixo + (isFim ? "    " : "│   "), false);
+            imprimirArvore(no.direita, prefixo + (isFim ? "    " : "│   "), true);
+        }
+    }
+
+
+
 }

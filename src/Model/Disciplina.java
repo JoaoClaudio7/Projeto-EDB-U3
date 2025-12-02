@@ -21,6 +21,10 @@ public class Disciplina implements Comparable<Disciplina> {
         return nome;
     }
 
+    public int getCargaHoraria(){
+        return cargaHoraria;
+    }
+
     // ? setters
     public void setNome(String nome){
         this.nome = nome;

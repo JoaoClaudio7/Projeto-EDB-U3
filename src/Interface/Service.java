@@ -1,13 +1,12 @@
 package Interface;
 
-import ArvoreAVL.ArvoreAVL;
 import Exception.NaoEncontradoException;
-import Model.Aluno;
-import Model.Pessoa;
 
 public interface Service<T> {
-    void inserir(int chave, Pessoa pessoa);
-    void remover(int matricula);
-    Aluno buscar(T matricula) throws NaoEncontradoException;
-    void imprimirEmOrdem(ArvoreAVL arvoreAVL);
+    void inserir(T objeto);
+    void remover(int id);
+    T buscar(int id) throws NaoEncontradoException;
+    void atualizar(int id, T novosDados) throws NaoEncontradoException;
+    void listar();
+    void exibirArvore();
 }

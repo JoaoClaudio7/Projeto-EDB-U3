@@ -22,7 +22,10 @@ public class Turma implements Comparable<Turma> {
     public String getAno() {
         return ano;
     }
-
+    public int getSemestre(){
+        return semestre;
+    }
+    
     // ? setters
     public void setAno(String ano) {
         this.ano = ano;

@@ -18,6 +18,13 @@ public class Professor extends Pessoa implements Comparable<Professor> {
         return id;
     }
 
+    public double getSalario(){
+        return salario;
+    }
+
+    public String getDisciplina() {
+        return disciplina;
+    }
     // ? setters
     public void setDisciplina(String d) {
         this.disciplina = d;

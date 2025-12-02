@@ -21,6 +21,10 @@ public class Curso implements Comparable<Curso> {
         return nome;
     }
 
+    public int getDuracaoSemestres() {
+        return duracaoSemestres;
+    }
+
     // ? setters
     public void setNome(String nome) {
         this.nome = nome;
