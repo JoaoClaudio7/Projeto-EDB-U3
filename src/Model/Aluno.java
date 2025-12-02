@@ -33,4 +33,16 @@ public class Aluno extends Pessoa implements Comparable<Aluno>{
     public int compareTo(Aluno other) {
         return Integer.compare(this.matricula, other.matricula);
     }
+
+    @Override
+    public String toString() {
+        return "--------------------------------------------------\n" +
+               "Matrícula: " + matricula + "\n" +
+               "Nome:      " + getNome() + "\n" +
+               "Curso:     " + curso + "\n" +
+               "CPF:       " + getCpf() + "\n" +
+               "Telefone:  " + getTelefone() + "\n" +
+               "Email:     " + getEmail() + "\n" +
+               "--------------------------------------------------";
+    }
 }

@@ -4,14 +4,12 @@ public class Turma implements Comparable<Turma> {
     private int id;
     private String ano;
     private int semestre;
-    private int codigoDisciplina;
 
     // ? construtor
     public Turma(int id, String ano, int semestre, int codigoDisciplina) {
         this.id = id;
         this.ano = ano;
         this.semestre = semestre;
-        this.codigoDisciplina = codigoDisciplina;
     }
 
     // ? getters
@@ -42,6 +40,9 @@ public class Turma implements Comparable<Turma> {
 
     @Override
     public String toString() {
-        return "Turma " + id + " (" + ano + "/" + semestre + ")";
+        return "--------------------------------------------------\n" +
+               "ID da Turma:     " + id + "\n" +
+               "Ano/Semestre:    " + ano + "/" + semestre + "\n" +
+               "--------------------------------------------------";
     }
 }

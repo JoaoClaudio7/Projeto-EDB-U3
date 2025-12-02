@@ -5,7 +5,6 @@ import ArvoreAVL.ArvoreAVL;
 import Exception.NaoEncontradoException;
 import Interface.Service;
 import Model.Aluno;
-import java.util.List;
 
 
 public class ServiceAluno implements Service<Aluno> {
@@ -41,8 +40,12 @@ public class ServiceAluno implements Service<Aluno> {
 
     @Override
     public void listar() {
-        for(Aluno a : arvore.emOrdem()) {
-            System.out.println(a.getMatricula() + ": " + a.getNome()); 
+        if (arvore.emOrdem().isEmpty()) {
+            System.out.println("Nenhum aluno cadastrado.");
+        } else {
+            for (Aluno a : arvore.emOrdem()) {
+                System.out.println(a); // Chama automaticamente o toString() bonito que criámos
+            }
         }
     }
 

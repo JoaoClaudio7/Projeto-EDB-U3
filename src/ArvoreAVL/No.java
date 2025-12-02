@@ -2,7 +2,6 @@ package ArvoreAVL;
 
 public class No<T> {
     T chave;
-    T pessoa;
     No<T> esquerda, direita;
     int altura;
 
@@ -60,13 +59,5 @@ public class No<T> {
 
     public void setAltura(int altura) {
         this.altura = altura;
-    }
-
-    public T getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(T pessoa) {
-        this.pessoa = pessoa;
     }
 }
