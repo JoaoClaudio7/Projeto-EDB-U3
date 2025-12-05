@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import Services.*;
 import Model.*;
 import Exception.NaoEncontradoException;
