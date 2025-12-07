@@ -4,14 +4,15 @@ JAVA = java
 SRC_DIR = src
 BIN_DIR = bin
 
-SOURCES = $(shell find $(SRC_DIR) -name "*.java")
+#SOURCES = $(shell find $(SRC_DIR) -name "*.java")
+SOURCES = $(wildcard $(SRC_DIR)/*.java)
 
 all: compile
 
 compile:
 	@echo "==> Compilando o projeto..."
-	@mkdir -p $(BIN_DIR)
-	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) $(SOURCES)
+	@if not exist $(BIN_DIR) mkdir $(BIN_DIR)
+	$(JAVAC) -encoding UTF-8 -d $(BIN_DIR) -sourcepath $(SRC_DIR) $(SOURCES)
 	@echo "==> Compilação concluída com sucesso."
 
 run: compile
