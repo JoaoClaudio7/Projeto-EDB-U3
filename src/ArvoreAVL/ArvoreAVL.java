@@ -9,6 +9,10 @@ public class ArvoreAVL<T extends Comparable<T>> {
         return no.altura;
     }
 
+    public int getTamanho() {
+    return emOrdem().size();
+    }
+
     // Método buscar público para buscar chave na árvore
     public T buscar(T chave) {
         No<T> resultado = buscar(raiz, chave);
