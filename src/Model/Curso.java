@@ -1,20 +1,19 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.List;
+import ArvoreAVL.ArvoreAVL;
 
 public class Curso implements Comparable<Curso> {
     private String nome;
     private int codigo;
     private int duracaoSemestres;
-    private List<Turma> turmas;
+    private ArvoreAVL<Turma> turmas;
 
     // ? construtor
-    public Curso(String nome, int codigo, int duracaoSemestres){
+    public Curso(String nome, int codigo, int duracaoSemestres) {
         this.nome = nome;
         this.codigo = codigo;
         this.duracaoSemestres = duracaoSemestres;
-        this.turmas = new ArrayList<>();
+        this.turmas = new ArvoreAVL<>();
     }
 
     // ? getters
@@ -30,7 +29,7 @@ public class Curso implements Comparable<Curso> {
         return duracaoSemestres;
     }
 
-    public List<Turma> getTurmas() {
+    public ArvoreAVL<Turma> getTurmas (){
         return turmas;
     }
 
@@ -45,27 +44,37 @@ public class Curso implements Comparable<Curso> {
 
     // ? métodos para gerenciar turmas
     public void adicionarTurma(Turma turma) {
-        this.turmas.add(turma);
+        this.turmas.inserir(turma);
     }
 
     public void removerTurma(int turmaId) {
-        this.turmas.removeIf(t -> t.getId() == turmaId);
+        this.turmas.remover(new Turma(turmaId, "", 0));
     }
 
     public Turma buscarTurma(int turmaId) {
-        return this.turmas.stream()
-                .filter(t -> t.getId() == turmaId)
-                .findFirst()
-                .orElse(null);
+        return this.turmas.buscar(new Turma(turmaId, "", 0));
     }
 
     @Override
     public int compareTo(Curso o) {
-        return Integer.compare((this.codigo), o.codigo);
+        return Integer.compare(this.codigo, o.codigo);
     }
 
     @Override
     public String toString() {
-        return codigo + " - " + getNome() + " (" + turmas.size() + " turmas)";
+        return codigo + " - " + nome + " (" + turmas.emOrdem().size() + " turmas)";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Curso)) return false;
+        Curso c = (Curso) o;
+        return this.codigo == c.codigo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(codigo);
     }
 }

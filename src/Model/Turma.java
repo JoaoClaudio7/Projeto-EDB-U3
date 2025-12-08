@@ -8,19 +8,21 @@ public class Turma implements Comparable<Turma> {
     private int semestre;
     private Disciplina disciplina;
     private Professor professor;
+    private Curso curso; 
     private ArvoreAVL<Aluno> alunos;
 
-    // ? construtor
+    // construtor
     public Turma(int id, String ano, int semestre) {
         this.id = id;
         this.ano = ano;
         this.semestre = semestre;
         this.disciplina = null;
         this.professor = null;
+        this.curso = null;
         this.alunos = new ArvoreAVL<>();
     }
 
-    // ? getters
+    // getters
     public int getId() {
         return id;
     }
@@ -29,7 +31,7 @@ public class Turma implements Comparable<Turma> {
         return ano;
     }
 
-    public int getSemestre(){
+    public int getSemestre() {
         return semestre;
     }
 
@@ -41,11 +43,15 @@ public class Turma implements Comparable<Turma> {
         return professor;
     }
 
+    public Curso getCurso() {
+        return curso;
+    }
+
     public ArvoreAVL<Aluno> getAlunos() {
         return alunos;
     }
-    
-    // ? setters
+
+    // setters
     public void setAno(String ano) {
         this.ano = ano;
     }
@@ -60,32 +66,36 @@ public class Turma implements Comparable<Turma> {
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
-        if (professor != null) {
+        if (professor != null)
             professor.setTurma(this);
-        }
     }
 
-    // ? métodos para gerenciar alunos
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+        if (curso != null)
+            curso.adicionarTurma(this);
+    }
+
+    // gestão de alunos
     public void adicionarAluno(Aluno aluno) {
         this.alunos.inserir(aluno);
         aluno.setTurma(this);
     }
 
     public void removerAluno(int matricula) {
-        for (Aluno a : this.alunos.emOrdem()) {
+        for (Aluno a : alunos.emOrdem()) {
             if (a.getMatricula() == matricula) {
                 a.setTurma(null);
-                this.alunos.remover(a);
+                alunos.remover(a);
                 return;
             }
         }
     }
 
     public Aluno buscarAluno(int matricula) {
-        for (Aluno a : this.alunos.emOrdem()) {
-            if (a.getMatricula() == matricula) {
+        for (Aluno a : alunos.emOrdem()) {
+            if (a.getMatricula() == matricula)
                 return a;
-            }
         }
         return null;
     }
@@ -99,7 +109,24 @@ public class Turma implements Comparable<Turma> {
     public String toString() {
         String disciplinaInfo = (disciplina != null) ? disciplina.getNome() : "Sem disciplina";
         String professorInfo = (professor != null) ? professor.getNome() : "Sem professor";
-        return "Turma " + id + " (" + ano + "/" + semestre + ") - " + disciplinaInfo + " - Prof: " + professorInfo;
+        String cursoInfo = (curso != null) ? curso.getNome() : "Sem curso";
+
+        return "Turma " + id + " (" + ano + "/" + semestre + ") - " + disciplinaInfo +
+                " - Prof: " + professorInfo +
+                " - Curso: " + cursoInfo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Turma))
+            return false;
+        return this.id == ((Turma) o).id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
 }

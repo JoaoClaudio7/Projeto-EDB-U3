@@ -41,6 +41,7 @@ public class ServiceTurma implements Service<Turma> {
                 System.out.println("--------------------------------------------------");
                 System.out.println("ID da Turma:     " + t.getId());
                 System.out.println("Ano/Semestre:    " + t.getAno() + "/" + t.getSemestre());
+                System.out.println("Curso:           " + (t.getCurso() != null ? t.getCurso().getNome() : "Sem curso"));
                 System.out.println("--------------------------------------------------");
             }
         }

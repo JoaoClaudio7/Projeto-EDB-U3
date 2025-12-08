@@ -11,7 +11,7 @@ public class Pessoa {
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
-}    
+    }
 
     public String getNome() {
         return nome;
@@ -44,4 +44,5 @@ public class Pessoa {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
