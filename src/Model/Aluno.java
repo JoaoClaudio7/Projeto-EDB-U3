@@ -5,7 +5,6 @@ public class Aluno extends Pessoa implements Comparable<Aluno> {
     private int matricula;
     private Turma turma;
 
-    // ? construtor
     public Aluno(String nome, String cpf, String telefone, String email, String curso, int matricula) {
         super(nome, cpf, telefone, email);
         this.curso = curso;
@@ -13,7 +12,6 @@ public class Aluno extends Pessoa implements Comparable<Aluno> {
         this.turma = null;
     }
 
-    // ? getters
     public String getCurso() {
         return curso;
     }
@@ -26,7 +24,6 @@ public class Aluno extends Pessoa implements Comparable<Aluno> {
         return turma;
     }
 
-    // ? setters
     public void setCurso(String curso) {
         this.curso = curso;
     }

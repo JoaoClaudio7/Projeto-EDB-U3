@@ -8,7 +8,6 @@ public class Curso implements Comparable<Curso> {
     private int duracaoSemestres;
     private ArvoreAVL<Turma> turmas;
 
-    // ? construtor
     public Curso(String nome, int codigo, int duracaoSemestres) {
         this.nome = nome;
         this.codigo = codigo;
@@ -16,7 +15,6 @@ public class Curso implements Comparable<Curso> {
         this.turmas = new ArvoreAVL<>();
     }
 
-    // ? getters
     public int getCodigo() {
         return codigo;
     }
@@ -33,7 +31,6 @@ public class Curso implements Comparable<Curso> {
         return turmas;
     }
 
-    // ? setters
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -42,7 +39,6 @@ public class Curso implements Comparable<Curso> {
         this.duracaoSemestres = duracaoSemestres;
     }
 
-    // ? métodos para gerenciar turmas
     public void adicionarTurma(Turma turma) {
         this.turmas.inserir(turma);
     }

@@ -5,14 +5,12 @@ public class Disciplina implements Comparable<Disciplina> {
     private int codigo;
     private int cargaHoraria;
 
-    // ? construtor
     public Disciplina(String nome, int codigo, int cargaHoraria) {
         this.nome = nome;
         this.codigo = codigo;
         this.cargaHoraria = cargaHoraria;
     }
 
-    // ? getters
     public int getCodigo() {
         return codigo;
     }
@@ -25,7 +23,6 @@ public class Disciplina implements Comparable<Disciplina> {
         return cargaHoraria;
     }
 
-    // ? setters
     public void setNome(String nome) {
         this.nome = nome;
     }
