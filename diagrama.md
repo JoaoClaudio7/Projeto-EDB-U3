@@ -3,6 +3,35 @@
 ```mermaid
 classDiagram
     %% ==========================================
+    %% PACOTE: VIEW (NOVO)
+    %% ==========================================
+    namespace View {
+        class MenuHandler {
+            -ServiceAluno serviceAluno$
+            -ServiceProfessor serviceProfessor$
+            -ServiceDisciplina serviceDisciplina$
+            -ServiceCurso serviceCurso$
+            -ServiceTurma serviceTurma$
+            +exibirMenuPrincipal()$
+            -menuAluno()$
+            -menuProfessor()$
+            -menuDisciplina()$
+            -menuCurso()$
+            -menuTurma()$
+            -carregarDadosIniciais()$
+        }
+    }
+
+    %% ==========================================
+    %% MAIN
+    %% ==========================================
+    class Main {
+        +main(String[] args)$
+    }
+
+    Main --> View.MenuHandler : usa
+
+    %% ==========================================
     %% PACOTE: MODEL
     %% ==========================================
     namespace Model {
@@ -13,6 +42,8 @@ classDiagram
             -String email
             +getNome() String
             +setCpf(String cpf)
+            +setTelefone(String telefone)
+            +setEmail(String email)
         }
 
         class Aluno {
@@ -46,6 +77,7 @@ classDiagram
             +removerAluno(int matricula)
             +setProfessor(Professor professor)
             +setCurso(Curso curso)
+            +buscarAluno(int matricula) Aluno
             +compareTo(Turma o) int
         }
 
@@ -68,29 +100,35 @@ classDiagram
         }
     }
 
-    %% Relacionamentos de Herança
+    %% Herança e Relacionamentos do Model
     Pessoa <|-- Aluno
     Pessoa <|-- Professor
 
-    %% Relacionamentos de Associação/Composição
     Turma "0..*" o-- "1" Curso : pertence a
     Curso "1" *-- "0..*" Turma : contem
     
     Turma "0..*" --> "0..1" Disciplina : tem
     
-    Turma "0..1" <--> "0..1" Professor : leciona/vinculado
+    Turma "0..1" <--> "0..1" Professor : leciona
     
-    Turma "1" <--> "0..*" Aluno : matriculado/vinculado
+    Turma "1" <--> "0..*" Aluno : matriculado
 
     %% ==========================================
-    %% PACOTE: ARVORE AVL
+    %% PACOTE: ARVORE AVL (ENCAPSULADO)
     %% ==========================================
     namespace ArvoreAVL {
         class No~T~ {
-            T chave
-            No~T~ esquerda
-            No~T~ direita
-            int altura
+            -T chave
+            -No~T~ esquerda
+            -No~T~ direita
+            -int altura
+            +getChave() T
+            +setChave(T chave)
+            +getEsquerda() No~T~
+            +setEsquerda(No~T~ no)
+            +getDireita() No~T~
+            +setDireita(No~T~ no)
+            +getAltura() int
         }
 
         class ArvoreAVL~T~ {
@@ -107,7 +145,7 @@ classDiagram
     ArvoreAVL *-- No : compoe
 
     %% ==========================================
-    %% PACOTE: INTERFACE & SERVICES
+    %% PACOTE: SERVICES
     %% ==========================================
     namespace Interface {
         class Service~T~ {
@@ -149,36 +187,36 @@ classDiagram
     Service <|.. ServiceDisciplina
     Service <|.. ServiceTurma
 
-    %% Dependencias dos Services para as Árvores
+    %% Dependências: View -> Services
+    View.MenuHandler --> Services.ServiceAluno
+    View.MenuHandler --> Services.ServiceProfessor
+    View.MenuHandler --> Services.ServiceCurso
+    View.MenuHandler --> Services.ServiceDisciplina
+    View.MenuHandler --> Services.ServiceTurma
+
+    %% Dependências: Services -> Models/Arvore
     ServiceAluno --> ArvoreAVL : usa
     ServiceProfessor --> ArvoreAVL : usa
     ServiceCurso --> ArvoreAVL : usa
     ServiceDisciplina --> ArvoreAVL : usa
     ServiceTurma --> ArvoreAVL : usa
 
-    %% Dependencias dos Services para os Models
-    ServiceAluno ..> Aluno : gerencia
-    ServiceProfessor ..> Professor : gerencia
-    ServiceCurso ..> Curso : gerencia
-    ServiceDisciplina ..> Disciplina : gerencia
-    ServiceTurma ..> Turma : gerencia
+    ServiceAluno ..> Model.Aluno
+    ServiceProfessor ..> Model.Professor
+    ServiceCurso ..> Model.Curso
+    ServiceDisciplina ..> Model.Disciplina
+    ServiceTurma ..> Model.Turma
 
     %% ==========================================
-    %% UTILS & MAIN
+    %% UTILS
     %% ==========================================
-    class InputHandler {
-        +lerInt(String msg)$ int
-        +lerString(String msg)$ String
-        +lerDouble(String msg)$ double
+    namespace Utils {
+        class InputHandler {
+            +lerInt(String msg)$ int
+            +lerString(String msg)$ String
+            +lerDouble(String msg)$ double
+        }
     }
 
-    class Main {
-        -ServiceAluno serviceAluno
-        -ServiceTurma serviceTurma
-        +main(String[] args)$
-    }
-
-    Main --> ServiceAluno : instancia
-    Main --> ServiceTurma : instancia
-    Main ..> InputHandler : usa
+    View.MenuHandler ..> Utils.InputHandler : usa
 ```

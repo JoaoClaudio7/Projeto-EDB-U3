@@ -1,63 +1,66 @@
 package ArvoreAVL;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArvoreAVL<T extends Comparable<T>> {
 
     private No<T> raiz = null;
 
     private int altura(No<T> no) {
         if (no == null) return 0;
-        return no.altura;
+        return no.getAltura(); 
     }
 
     public int getTamanho() {
-    return emOrdem().size();
+        return emOrdem().size();
     }
 
     public T buscar(T chave) {
         No<T> resultado = buscar(raiz, chave);
-        return (resultado != null) ? resultado.chave : null;
+        return (resultado != null) ? resultado.getChave() : null; 
     }
 
     private No<T> buscar(No<T> no, T chave) {
         if (no == null) return null;
 
-        int cmp = chave.compareTo(no.chave);
+        int cmp = chave.compareTo(no.getChave()); 
         if (cmp == 0) {
             return no;
         } else if (cmp < 0) {
-            return buscar(no.esquerda, chave);
+            return buscar(no.getEsquerda(), chave); 
         } else {
-            return buscar(no.direita, chave);
+            return buscar(no.getDireita(), chave); 
         }
     }
 
     private int fatorBalanceamento(No<T> no) {
         if (no == null) return 0;
-        return altura(no.esquerda) - altura(no.direita);
+        return altura(no.getEsquerda()) - altura(no.getDireita()); 
     }
 
     private No<T> rotacaoDireita(No<T> y) {
-        No<T> x = y.esquerda;
-        No<T> T2 = x.direita;
+        No<T> x = y.getEsquerda(); 
+        No<T> T2 = x.getDireita(); 
 
-        x.direita = y;
-        y.esquerda = T2;
+        x.setDireita(y); 
+        y.setEsquerda(T2); 
 
-        y.altura = Math.max(altura(y.esquerda), altura(y.direita)) + 1;
-        x.altura = Math.max(altura(x.esquerda), altura(x.direita)) + 1;
+        y.setAltura(Math.max(altura(y.getEsquerda()), altura(y.getDireita())) + 1);
+        x.setAltura(Math.max(altura(x.getEsquerda()), altura(x.getDireita())) + 1);
 
         return x;
     }
 
     private No<T> rotacaoEsquerda(No<T> x) {
-        No<T> y = x.direita;
-        No<T> T2 = y.esquerda;
+        No<T> y = x.getDireita(); 
+        No<T> T2 = y.getEsquerda(); 
 
-        y.esquerda = x;
-        x.direita = T2;
+        y.setEsquerda(x); 
+        x.setDireita(T2); 
 
-        x.altura = Math.max(altura(x.esquerda), altura(x.direita)) + 1;
-        y.altura = Math.max(altura(y.esquerda), altura(y.direita)) + 1;
+        x.setAltura(Math.max(altura(x.getEsquerda()), altura(x.getDireita())) + 1);
+        y.setAltura(Math.max(altura(y.getEsquerda()), altura(y.getDireita())) + 1);
 
         return y;
     }
@@ -66,32 +69,33 @@ public class ArvoreAVL<T extends Comparable<T>> {
         if (no == null)
             return new No<T>(chave);
 
-        int cmp = chave.compareTo(no.chave);
+        int cmp = chave.compareTo(no.getChave()); 
+
         if (cmp < 0) {
-            no.esquerda = inserir(no.esquerda, chave);
+            no.setEsquerda(inserir(no.getEsquerda(), chave)); 
         } else if (cmp > 0) {
-            no.direita = inserir(no.direita, chave);
+            no.setDireita(inserir(no.getDireita(), chave)); 
         } else {
             return no; 
         }
 
-        no.altura = 1 + Math.max(altura(no.esquerda), altura(no.direita));
+        no.setAltura(1 + Math.max(altura(no.getEsquerda()), altura(no.getDireita())));
 
         int balance = fatorBalanceamento(no);
 
-        if (balance > 1 && chave.compareTo(no.esquerda.chave) < 0)
+        if (balance > 1 && chave.compareTo(no.getEsquerda().getChave()) < 0) 
             return rotacaoDireita(no);
 
-        if (balance < -1 && chave.compareTo(no.direita.chave) > 0)
+        if (balance < -1 && chave.compareTo(no.getDireita().getChave()) > 0) 
             return rotacaoEsquerda(no);
 
-        if (balance > 1 && chave.compareTo(no.esquerda.chave) > 0) {
-            no.esquerda = rotacaoEsquerda(no.esquerda);
+        if (balance > 1 && chave.compareTo(no.getEsquerda().getChave()) > 0) { 
+            no.setEsquerda(rotacaoEsquerda(no.getEsquerda())); 
             return rotacaoDireita(no);
         }
 
-        if (balance < -1 && chave.compareTo(no.direita.chave) < 0) {
-            no.direita = rotacaoDireita(no.direita);
+        if (balance < -1 && chave.compareTo(no.getDireita().getChave()) < 0) { 
+            no.setDireita(rotacaoDireita(no.getDireita())); 
             return rotacaoEsquerda(no);
         }
 
@@ -104,8 +108,8 @@ public class ArvoreAVL<T extends Comparable<T>> {
     
     private No<T> noMinimo(No<T> no) {
         No<T> atual = no;
-        while (atual.esquerda != null) {
-            atual = atual.esquerda;
+        while (atual.getEsquerda() != null) { 
+            atual = atual.getEsquerda(); 
         }
         return atual;
     }
@@ -113,16 +117,17 @@ public class ArvoreAVL<T extends Comparable<T>> {
     private No<T> remover(No<T> no, T chave) {
         if (no == null) return null;
 
-        int cmp = chave.compareTo(no.chave);
+        int cmp = chave.compareTo(no.getChave()); 
+
         if (cmp < 0) {
-            no.esquerda = remover(no.esquerda, chave);
+            no.setEsquerda(remover(no.getEsquerda(), chave)); 
         } else if (cmp > 0) {
-            no.direita = remover(no.direita, chave);
+            no.setDireita(remover(no.getDireita(), chave)); 
         } else {
-            if ((no.esquerda == null) || (no.direita == null)) {
+            if ((no.getEsquerda() == null) || (no.getDireita() == null)) { 
                 No<T> temp = null;
-                if (no.esquerda != null) temp = no.esquerda;
-                else temp = no.direita;
+                if (no.getEsquerda() != null) temp = no.getEsquerda(); 
+                else temp = no.getDireita(); 
 
                 if (temp == null) {
                     no = null;
@@ -130,31 +135,31 @@ public class ArvoreAVL<T extends Comparable<T>> {
                     no = temp;
                 }
             } else {
-                No<T> temp = noMinimo(no.direita);
-                no.chave = temp.chave;
-                no.direita = remover(no.direita, temp.chave);
+                No<T> temp = noMinimo(no.getDireita()); 
+                no.setChave(temp.getChave()); 
+                no.setDireita(remover(no.getDireita(), temp.getChave())); 
             }
         }
 
         if (no == null) return no; 
 
-        no.altura = Math.max(altura(no.esquerda), altura(no.direita)) + 1;
+        no.setAltura(Math.max(altura(no.getEsquerda()), altura(no.getDireita())) + 1); 
 
         int balance = fatorBalanceamento(no);
 
-        if (balance > 1 && fatorBalanceamento(no.esquerda) >= 0)
+        if (balance > 1 && fatorBalanceamento(no.getEsquerda()) >= 0) 
             return rotacaoDireita(no);
 
-        if (balance > 1 && fatorBalanceamento(no.esquerda) < 0) {
-            no.esquerda = rotacaoEsquerda(no.esquerda);
+        if (balance > 1 && fatorBalanceamento(no.getEsquerda()) < 0) { 
+            no.setEsquerda(rotacaoEsquerda(no.getEsquerda())); 
             return rotacaoDireita(no);
         }
 
-        if (balance < -1 && fatorBalanceamento(no.direita) <= 0)
+        if (balance < -1 && fatorBalanceamento(no.getDireita()) <= 0) 
             return rotacaoEsquerda(no);
 
-        if (balance < -1 && fatorBalanceamento(no.direita) > 0) {
-            no.direita = rotacaoDireita(no.direita);
+        if (balance < -1 && fatorBalanceamento(no.getDireita()) > 0) { 
+            no.setDireita(rotacaoDireita(no.getDireita())); 
             return rotacaoEsquerda(no);
         }
 
@@ -164,16 +169,17 @@ public class ArvoreAVL<T extends Comparable<T>> {
     public void remover(T chave) {
         raiz = remover(raiz, chave);
     }
-    private void emOrdem(No<T> no, java.util.List<T> lista) {
+
+    private void emOrdem(No<T> no, List<T> lista) {
         if (no != null) {
-            emOrdem(no.esquerda, lista);
-            lista.add(no.chave);
-            emOrdem(no.direita, lista);
+            emOrdem(no.getEsquerda(), lista); 
+            lista.add(no.getChave());
+            emOrdem(no.getDireita(), lista);
         }
     }
 
-    public java.util.List<T> emOrdem() {
-        java.util.List<T> lista = new java.util.ArrayList<>();
+    public List<T> emOrdem() {
+        List<T> lista = new ArrayList<>();
         emOrdem(raiz, lista);
         return lista;
     }
@@ -186,13 +192,10 @@ public class ArvoreAVL<T extends Comparable<T>> {
         if(no != null){
             System.out.print(prefixo);
             System.out.print(isFim ? "└── " : "├── ");
-            System.out.println(no.chave);
+            System.out.println(no.getChave()); 
 
-            imprimirArvore(no.esquerda, prefixo + (isFim ? "    " : "│   "), false);
-            imprimirArvore(no.direita, prefixo + (isFim ? "    " : "│   "), true);
+            imprimirArvore(no.getEsquerda(), prefixo + (isFim ? "    " : "│   "), false); 
+            imprimirArvore(no.getDireita(), prefixo + (isFim ? "    " : "│   "), true); 
         }
     }
-
-
-
 }
