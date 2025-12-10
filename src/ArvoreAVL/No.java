@@ -1,10 +1,9 @@
 package ArvoreAVL;
 
 public class No<T> {
-    T chave;
-    No<T> esquerda, direita;
-    int altura;
-
+    private T chave;
+    private No<T> esquerda, direita;
+    private int altura;
     public No(T chave) {
         this.chave = chave;
         altura = 1;
@@ -24,40 +23,18 @@ public class No<T> {
 
     @Override
     public String toString() {
-        return "No{" +
-                "chave=" + chave +
-                '}';
+        return "No{" + "chave=" + chave + '}';
     }
 
-    public T getChave() {
-        return chave;
-    }
+    public T getChave() { return chave; }
+    public void setChave(T chave) { this.chave = chave; }
 
-    public void setChave(T chave) {
-        this.chave = chave;
-    }
+    public No<T> getEsquerda() { return esquerda; }
+    public void setEsquerda(No<T> esquerda) { this.esquerda = esquerda; }
 
-    public No<T> getEsquerda() {
-        return esquerda;
-    }
+    public No<T> getDireita() { return direita; }
+    public void setDireita(No<T> direita) { this.direita = direita; }
 
-    public void setEsquerda(No<T> esquerda) {
-        this.esquerda = esquerda;
-    }
-
-    public No<T> getDireita() {
-        return direita;
-    }
-
-    public void setDireita(No<T> direita) {
-        this.direita = direita;
-    }
-
-    public int getAltura() {
-        return altura;
-    }
-
-    public void setAltura(int altura) {
-        this.altura = altura;
-    }
+    public int getAltura() { return altura; }
+    public void setAltura(int altura) { this.altura = altura; }
 }
