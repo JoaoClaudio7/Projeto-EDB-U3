@@ -5,42 +5,55 @@ public class Disciplina implements Comparable<Disciplina> {
     private int codigo;
     private int cargaHoraria;
 
-    // ? construtor
     public Disciplina(String nome, int codigo, int cargaHoraria) {
         this.nome = nome;
         this.codigo = codigo;
         this.cargaHoraria = cargaHoraria;
     }
 
-    // ? getters
-    public int getCodigo(){
+    public int getCodigo() {
         return codigo;
     }
 
-    public String getNome(){
+    public String getNome() {
         return nome;
     }
 
-    public int getCargaHoraria(){
+    public int getCargaHoraria() {
         return cargaHoraria;
     }
 
-    // ? setters
-    public void setNome(String nome){
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setCargaHoraria(int cargaHoraria){
+    public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 
     @Override
-    public int compareTo(Disciplina o){
+    public int compareTo(Disciplina o) {
         return Integer.compare(this.codigo, o.codigo);
     }
 
-   @Override
+    @Override
     public String toString() {
         return codigo + " - " + getNome();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Disciplina))
+            return false;
+        Disciplina d = (Disciplina) o;
+        return this.codigo == d.codigo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(codigo);
+    }
+
 }

@@ -9,13 +9,15 @@ public class ArvoreAVL<T extends Comparable<T>> {
         return no.altura;
     }
 
-    // Método buscar público para buscar chave na árvore
+    public int getTamanho() {
+    return emOrdem().size();
+    }
+
     public T buscar(T chave) {
         No<T> resultado = buscar(raiz, chave);
         return (resultado != null) ? resultado.chave : null;
     }
 
-    // Método recursivo auxiliar para busca
     private No<T> buscar(No<T> no, T chave) {
         if (no == null) return null;
 
@@ -70,28 +72,24 @@ public class ArvoreAVL<T extends Comparable<T>> {
         } else if (cmp > 0) {
             no.direita = inserir(no.direita, chave);
         } else {
-            return no; // chaves duplicadas não permitidas
+            return no; 
         }
 
         no.altura = 1 + Math.max(altura(no.esquerda), altura(no.direita));
 
         int balance = fatorBalanceamento(no);
 
-        // Caso LL
         if (balance > 1 && chave.compareTo(no.esquerda.chave) < 0)
             return rotacaoDireita(no);
 
-        // Caso RR
         if (balance < -1 && chave.compareTo(no.direita.chave) > 0)
             return rotacaoEsquerda(no);
 
-        // Caso LR
         if (balance > 1 && chave.compareTo(no.esquerda.chave) > 0) {
             no.esquerda = rotacaoEsquerda(no.esquerda);
             return rotacaoDireita(no);
         }
 
-        // Caso RL
         if (balance < -1 && chave.compareTo(no.direita.chave) < 0) {
             no.direita = rotacaoDireita(no.direita);
             return rotacaoEsquerda(no);
@@ -121,48 +119,40 @@ public class ArvoreAVL<T extends Comparable<T>> {
         } else if (cmp > 0) {
             no.direita = remover(no.direita, chave);
         } else {
-            // Nó com apenas um filho ou nenhum
             if ((no.esquerda == null) || (no.direita == null)) {
                 No<T> temp = null;
                 if (no.esquerda != null) temp = no.esquerda;
                 else temp = no.direita;
 
-                // Sem filhos
                 if (temp == null) {
                     no = null;
                 } else {
                     no = temp;
                 }
             } else {
-                // Nó com dois filhos: pegar o menor sucessor da direita
                 No<T> temp = noMinimo(no.direita);
                 no.chave = temp.chave;
                 no.direita = remover(no.direita, temp.chave);
             }
         }
 
-        if (no == null) return no; // Caso base para retorno
+        if (no == null) return no; 
 
-        // Atualizar altura
         no.altura = Math.max(altura(no.esquerda), altura(no.direita)) + 1;
 
         int balance = fatorBalanceamento(no);
 
-        // Caso LL
         if (balance > 1 && fatorBalanceamento(no.esquerda) >= 0)
             return rotacaoDireita(no);
 
-        // Caso LR
         if (balance > 1 && fatorBalanceamento(no.esquerda) < 0) {
             no.esquerda = rotacaoEsquerda(no.esquerda);
             return rotacaoDireita(no);
         }
 
-        // Caso RR
         if (balance < -1 && fatorBalanceamento(no.direita) <= 0)
             return rotacaoEsquerda(no);
 
-        // Caso RL
         if (balance < -1 && fatorBalanceamento(no.direita) > 0) {
             no.direita = rotacaoDireita(no.direita);
             return rotacaoEsquerda(no);
