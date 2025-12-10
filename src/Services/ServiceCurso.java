@@ -15,7 +15,20 @@ public class ServiceCurso implements Service<Curso> {
 
     @Override
     public void remover(int codigo) {
+        try {
+        Curso curso = buscar(codigo);
+
+        if (!curso.getTurmas().emOrdem().isEmpty()) {
+            System.out.println("ERRO: Não é possível remover este curso pois existem turmas vinculadas a ele.");
+            return;
+        }
+
         arvore.remover(new Curso("", codigo, 0));
+        System.out.println("Curso removido com sucesso!");
+
+        } catch (NaoEncontradoException e) {
+            System.out.println("Erro: Curso não encontrado.");
+        }
     }
 
     @Override

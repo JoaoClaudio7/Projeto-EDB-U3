@@ -15,7 +15,20 @@ public class ServiceProfessor implements Service<Professor> {
 
     @Override
     public void remover(int id) {
-        arvore.remover(new Professor("", "", "", "", "", 0.0, id));
+        try {
+            Professor prof = buscar(id);
+
+            if (prof.getTurma() != null) {
+                prof.getTurma().setProfessor(null); 
+            }
+
+            Professor dummy = new Professor("", "", "", "", "", 0.0, id);
+            arvore.remover(dummy);
+            System.out.println("Professor removido com sucesso!");
+
+        } catch (NaoEncontradoException e) {
+            System.out.println("Erro: Professor não encontrado para remoção.");
+        }
     }
 
     @Override

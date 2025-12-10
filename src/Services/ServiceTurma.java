@@ -18,7 +18,27 @@ public class ServiceTurma implements Service<Turma> {
 
     @Override
     public void remover(int id) {
-        arvore.remover(new Turma(id, "", 0));
+        try {
+            Turma turma = buscar(id);
+
+            if (turma.getProfessor() != null) {
+                turma.getProfessor().setTurma(null);
+            }
+
+            if (turma.getCurso() != null) {
+                turma.getCurso().removerTurma(id);
+            }
+
+            for (Model.Aluno a : turma.getAlunos().emOrdem()) {
+                a.setTurma(null);
+            }
+            
+            arvore.remover(new Turma(id, "", 0));
+            System.out.println("Turma removida com sucesso!");
+
+        } catch (NaoEncontradoException e) {
+            System.out.println("Erro: Turma não encontrada.");
+        }
     }
 
     @Override

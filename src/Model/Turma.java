@@ -79,21 +79,17 @@ public class Turma implements Comparable<Turma> {
     }
 
     public void removerAluno(int matricula) {
-        for (Aluno a : alunos.emOrdem()) {
-            if (a.getMatricula() == matricula) {
-                a.setTurma(null);
-                alunos.remover(a);
-                return;
-            }
+        Aluno aluno = buscarAluno(matricula);
+        
+        if (aluno != null) {
+            aluno.setTurma(null);
+            this.alunos.remover(aluno);
         }
     }
 
     public Aluno buscarAluno(int matricula) {
-        for (Aluno a : alunos.emOrdem()) {
-            if (a.getMatricula() == matricula)
-                return a;
-        }
-        return null;
+        Aluno dummy = new Aluno("", "", "", "", "", matricula);
+        return this.alunos.buscar(dummy);
     }
 
     @Override

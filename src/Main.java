@@ -70,7 +70,6 @@ private static void menuAluno() {
         System.out.println("5. Listar");
         System.out.println("6. Árvore");
         System.out.println("0. Voltar");
-        System.out.print("Opção: ");
 
         opcao = InputHandler.lerInt("Opção: ");
         try {
@@ -99,7 +98,8 @@ private static void menuAluno() {
                             String curso = InputHandler.lerString("Curso: ");
 
                             Aluno aluno = new Aluno(nome, cpf, tel, email, curso, matricula);
-                            aluno.setTurma(serviceTurma.buscar(idTurma));
+                            Turma t = serviceTurma.buscar(idTurma);
+                            t.adicionarAluno(aluno);
                             serviceAluno.inserir(aluno);
                             System.out.println("Aluno cadastrado com sucesso!");
                         }
@@ -182,7 +182,6 @@ private static void menuAluno() {
             System.out.println("5. Listar");
             System.out.println("6. Árvore");
             System.out.println("0. Voltar");
-            System.out.print("Opção: ");
             opcao = InputHandler.lerInt("Opção: ");
 
             try {
@@ -285,7 +284,6 @@ private static void menuAluno() {
             System.out.println("5. Listar");
             System.out.println("6. Árvore");
             System.out.println("0. Voltar");
-            System.out.print("Opção: ");
             opcao = InputHandler.lerInt("Opção: ");
             try {
                 switch (opcao) {
@@ -559,27 +557,27 @@ private static void menuAluno() {
 
             Aluno a1 = new Aluno("Ana Paula", "444.444.444-44", "(84) 98888-0001",
                     "ana.paula@email.com", "Ciência da Computação", 20231001);
-            a1.setTurma(serviceTurma.buscar(1));
+            serviceTurma.buscar(1).adicionarAluno(a1);
             serviceAluno.inserir(a1);
 
             Aluno a2 = new Aluno("Carlos Eduardo", "555.555.555-55", "(84) 98888-0002",
                     "carlos.eduardo@email.com", "Ciência da Computação", 20231002);
-            a2.setTurma(serviceTurma.buscar(1));
+            serviceTurma.buscar(1).adicionarAluno(a2);
             serviceAluno.inserir(a2);
 
             Aluno a3 = new Aluno("Beatriz Lima", "666.666.666-66", "(84) 98888-0003",
                     "beatriz.lima@email.com", "Engenharia de Software", 20231003);
-            a3.setTurma(serviceTurma.buscar(2));
+            serviceTurma.buscar(2).adicionarAluno(a3);
             serviceAluno.inserir(a3);
 
             Aluno a4 = new Aluno("Daniel Souza", "777.777.777-77", "(84) 98888-0004",
                     "daniel.souza@email.com", "Sistemas de Informação", 20231004);
-            a4.setTurma(serviceTurma.buscar(3));
+            serviceTurma.buscar(3).adicionarAluno(a4);
             serviceAluno.inserir(a4);
 
             Aluno a5 = new Aluno("Fernanda Oliveira", "888.888.888-88", "(84) 98888-0005",
                     "fernanda.oliveira@email.com", "Ciência da Computação", 20231005);
-            a5.setTurma(serviceTurma.buscar(1));
+            serviceTurma.buscar(1).adicionarAluno(a5);
             serviceAluno.inserir(a5);
 
             System.out.println("✓ Dados iniciais carregados com sucesso!");

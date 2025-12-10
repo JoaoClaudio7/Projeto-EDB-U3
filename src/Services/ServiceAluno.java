@@ -17,8 +17,19 @@ public class ServiceAluno implements Service<Aluno> {
 
     @Override
     public void remover(int matricula){
-        Aluno dummy = new Aluno("", "", "", "", "", matricula);
-        arvore.remover(dummy);
+       try {
+            Aluno aluno = buscar(matricula);
+            
+            if (aluno.getTurma() != null) {
+                aluno.getTurma().removerAluno(matricula);
+            }
+
+            Aluno dummy = new Aluno("", "", "", "", "", matricula);
+            arvore.remover(dummy);
+            
+        } catch (NaoEncontradoException e) {
+            System.out.println("Erro: Aluno não encontrado para remoção.");
+        }
     }
 
     @Override
